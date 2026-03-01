@@ -27,7 +27,7 @@ class SearchViewModel(
         debounceJob = viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             delay(400)
-            val results = searchReposUseCase(query)  // вызов UseCase
+            val results = searchReposUseCase(query)
             _uiState.update { it.copy(results = results, isLoading = false) }
         }
     }

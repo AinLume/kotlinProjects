@@ -1,0 +1,17 @@
+[
+  {"id": 1, "user_id": 1, "title": "Красивый закат сегодня", "body": "Смотрите, какой цвет неба — оранжевый переходит в фиолетовый. Такого я давно не видел.", "avatar_url": "https://i.pravatar.cc/150?img=1"},
+  {"id": 2, "user_id": 2, "title": "Новый кофе-мастер-класс", "body": "Приходите все! Будем учиться делать латте-арт и пробовать разные сорта эспрессо.", "avatar_url": "https://i.pravatar.cc/150?img=2"},
+  {"id": 3, "user_id": 3, "title": "Пробежка в парке", "body": "5 км за 28 минут — личный рекорд! Осенний воздух просто невероятный.", "avatar_url": "https://i.pravatar.cc/150?img=3"},
+  {"id": 4, "user_id": 4, "title": "Новая книга на полке", "body": "Дочитал «Мастера и Маргариту» за три дня. Булгаков — гений.", "avatar_url": "https://i.pravatar.cc/150?img=4"},
+  {"id": 5, "user_id": 5, "title": "Домашняя пицца получилась!", "body": "Тесто на закваске, моцарелла, базилик. Рецепт скину в комментариях.", "avatar_url": "https://i.pravatar.cc/150?img=5"},
+  {"id": 6, "user_id": 1, "title": "Митап по Android разработке", "body": "Вчера выступал на митапе с докладом про Jetpack Compose. Отличная аудитория!", "avatar_url": "https://i.pravatar.cc/150?img=1"},
+  {"id": 7, "user_id": 6, "title": "Котик освоил новый диван", "body": "Два часа выбирал место, в итоге занял всё.", "avatar_url": "https://i.pravatar.cc/150?img=6"},
+  {"id": 8, "user_id": 7, "title": "Велопрогулка по набережной", "body": "20 км вдоль реки. Закат, свежий воздух, никаких машин.", "avatar_url": "https://i.pravatar.cc/150?img=7"},
+  {"id": 9, "user_id": 8, "title": "Open source проект запущен", "body": "Наконец-то опубликовал свою библиотеку на GitHub. Первые звёзды уже есть!", "avatar_url": "https://i.pravatar.cc/150?img=8"},
+  {"id": 10, "user_id": 9, "title": "Горы зовут", "body": "Высота 2400 м. Облака под ногами. За это и люблю треккинг.", "avatar_url": "https://i.pravatar.cc/150?img=9"},
+  {"id": 11, "user_id": 10, "title": "Kotlin Coroutines — это магия", "body": "Разобрался наконец с Flow и StateFlow. Теперь реактивщина не пугает.", "avatar_url": "https://i.pravatar.cc/150?img=10"},
+  {"id": 12, "user_id": 2, "title": "Рассвет над городом", "body": "Проснулся в 5 утра специально ради этого. Оно того стоило.", "avatar_url": "https://i.pravatar.cc/150?img=2"},
+  {"id": 13, "user_id": 11, "title": "Новый рекорд в шахматах", "body": "Рейтинг перевалил за 1800. Следующая цель — кандидат в мастера.", "avatar_url": "https://i.pravatar.cc/150?img=11"},
+  {"id": 14, "user_id": 12, "title": "Концерт под открытым небом", "body": "Джаз, звёзды, плед и термос с чаем. Идеальный вечер.", "avatar_url": "https://i.pravatar.cc/150?img=12"},
+  {"id": 15, "user_id": 3, "title": "Clean Architecture в Android", "body": "Написал пет-проект с полным разделением слоёв. UseCase — это просто кайф.", "avatar_url": "https://i.pravatar.cc/150?img=3"}
+]
