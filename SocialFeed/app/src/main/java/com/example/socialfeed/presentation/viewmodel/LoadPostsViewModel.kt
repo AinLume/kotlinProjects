@@ -26,6 +26,10 @@ class LoadPostsViewModel (
 
     private var loadingJob: Job? = null
 
+    fun refresh() {
+        loadFeed()
+    }
+
     fun loadFeed() {
         loadingJob?.cancel()
 
