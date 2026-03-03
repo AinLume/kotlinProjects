@@ -5,6 +5,13 @@ import java.io.File
 import java.security.MessageDigest
 import kotlin.system.measureTimeMillis
 
+/**
+ * Точка входа программы.
+ *
+ * Запускает поиск JSON-файлов-дубликатов в директории [rootDirPath] с общим таймаутом [timeoutSeconds].
+ * Если поиск не завершился за отведённое время — все корутины отменяются и выводится сообщение о таймауте.
+ * По завершении выводит время выполнения в миллисекундах.
+ */
 fun main() = runBlocking {
     val rootDirPath = "src/main/resources/prac2"
     val timeoutSeconds = 10L
@@ -24,6 +31,17 @@ fun main() = runBlocking {
     println("Complete at $time ms")
 }
 
+/**
+ * Рекурсивно обходит директорию [rootDirPath], находит все JSON-файлы
+ * и возвращает группы дубликатов, сгруппированных по SHA-256 хэшу содержимого.
+ *
+ * Хэширование каждого файла выполняется параллельно с помощью [async] + [Dispatchers.IO].
+ * Если корутина была отменена до начала обработки файла — файл пропускается.
+ *
+ * @param rootDirPath абсолютный или относительный путь к корневой директории поиска.
+ * @return Map, где ключ — SHA-256 хэш, значение — список файлов с одинаковым содержимым.
+ *         Содержит только группы с двумя и более файлами (то есть реальные дубликаты).
+ */
 suspend fun findDuplicateJsonFiles(rootDirPath: String): Map<String, List<File>> =
     coroutineScope {
         val root = File(rootDirPath)
@@ -48,6 +66,20 @@ suspend fun findDuplicateJsonFiles(rootDirPath: String): Map<String, List<File>>
             .filterValues { it.size > 1 }
     }
 
+/**
+ * Вычисляет SHA-256 хэш содержимого файла [file].
+ *
+ * Файл читается побуферно ([DEFAULT_BUFFER_SIZE]) для экономии памяти при работе с большими файлами.
+ * После каждого прочитанного чанка вызывается [ensureActive] — это позволяет корректно
+ * отреагировать на отмену корутины (например, при срабатывании таймаута) без утечки ресурсов.
+ *
+ * Выполняется в [Dispatchers.IO] — пуле потоков, предназначенном для блокирующих IO-операций.
+ *
+ * @param file файл, для которого вычисляется хэш.
+ * @return строка с HEX-представлением SHA-256 хэша (64 символа, нижний регистр).
+ * @throws kotlinx.coroutines.CancellationException если корутина была отменена во время чтения.
+ * @throws java.io.IOException если файл недоступен для чтения.
+ */
 suspend fun computeFileSha256(file: File): String = withContext(Dispatchers.IO) {
     val digest = MessageDigest.getInstance("SHA-256")
 
@@ -67,6 +99,15 @@ suspend fun computeFileSha256(file: File): String = withContext(Dispatchers.IO) 
     hashBytes.joinToString("") { "%02x".format(it) }
 }
 
+/**
+ * Выводит в консоль группы файлов-дубликатов.
+ *
+ * Для каждой группы печатает SHA-256 хэш и абсолютные пути всех файлов с этим хэшем.
+ * Если дубликатов не найдено — выводит соответствующее сообщение.
+ *
+ * @param duplicates Map с результатами поиска: ключ — SHA-256 хэш, значение — список дубликатов.
+ *                   Ожидается что каждая группа содержит минимум два файла.
+ */
 fun printDuplicateGroups(duplicates: Map<String, List<File>>) {
     if (duplicates.isEmpty()) {
         println("Duplicates don't exist")
