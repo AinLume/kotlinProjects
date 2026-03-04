@@ -1,47 +1,46 @@
 package com.example.prac5
 
+import android.Manifest
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.prac5.ui.theme.Prac5Theme
+import androidx.compose.material3.MaterialTheme
+import com.example.prac5.data.repository.TimerRepositoryImpl
+import com.example.prac5.domain.usecase.GetSecondsUseCase
+import com.example.prac5.presentation.screen.TimerScreen
+import com.example.prac5.presentation.viewmodel.TimerViewModel
+import com.example.prac5.service.TimerService
 
 class MainActivity : ComponentActivity() {
+
+    fun startTimer(intent: Intent) {
+        startForegroundService(intent)
+    }
+
+    fun stopTimer(intent: Intent) {
+        stopService(intent)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+
+        requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 0)
+
+        val intent = Intent(this, TimerService::class.java)
+
+        val timerRepository = TimerRepositoryImpl
+        val getSecondsUseCase = GetSecondsUseCase(timerRepository)
+        val viewModel = TimerViewModel(getSecondsUseCase)
+
         setContent {
-            Prac5Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+            MaterialTheme {
+                TimerScreen(
+                    viewModel,
+                    { startTimer(intent) },
+                    { stopTimer(intent) }
+                )
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Prac5Theme {
-        Greeting("Android")
     }
 }
