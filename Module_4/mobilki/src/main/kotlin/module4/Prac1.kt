@@ -3,7 +3,6 @@ package org.example.module4
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.supervisorScope
@@ -24,7 +23,7 @@ fun readResource(filename: String): String {
     val inputStream = Thread.currentThread()
         .contextClassLoader
         ?.getResourceAsStream(filename)
-        ?: error("Файл не найден: $filename")
+        ?: error("File not found: $filename")
     return inputStream.bufferedReader().use { it.readText() }
 }
 
@@ -37,7 +36,7 @@ suspend fun loadUsers(): List<String> {
     delay(1800)
     if ((1..10).random() <= 3) throw RuntimeException("Error loading users")
 
-    val json = readResource("src/main/resources/prac1/users.json")
+    val json = readResource("prac1/users.json")
     val type = object : TypeToken<List<User>>() {}.type
     val users: List<User> = Gson().fromJson(json, type)
     return users.map { it.name }
@@ -52,7 +51,7 @@ suspend fun loadSales(): Map<String, Int> {
     delay(1200)
     if ((1..10).random() <= 3) throw RuntimeException("Error loading sales stats")
 
-    val json = readResource("src/main/resources/prac1/sales.json")
+    val json = readResource("prac1/sales.json")
     val report: SalesReport = Gson().fromJson(json, SalesReport::class.java)
     return report.items.associate { it.product to it.revenue }
 }
@@ -66,7 +65,7 @@ suspend fun loadWeather(): List<String> {
     delay(2500)
     if ((1..10).random() <= 3) throw RuntimeException("Error loading weather")
 
-    val json = readResource("src/main/resources/prac1/weather.json")
+    val json = readResource("prac1/weather.json")
     val type = object : TypeToken<List<WeatherInfo>>() {}.type
     val cities: List<WeatherInfo> = Gson().fromJson(json, type)
     return cities.map { "${it.city}: ${it.temp}°C, ${it.condition}" }
