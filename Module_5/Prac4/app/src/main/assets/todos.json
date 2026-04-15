@@ -1,0 +1,7 @@
+[
+  {"id": 1, "title": "Купить продукты", "description": "Молоко, хлеб, яйца", "isDone": false},
+  {"id": 2, "title": "Сделать зарядку", "description": "30 минут кардио", "isDone": false},
+  {"id": 3, "title": "Прочитать книгу", "description": "Глава 5-7", "isDone": true},
+  {"id": 4, "title": "Позвонить другу", "description": "", "isDone": false},
+  {"id": 5, "title": "Оплатить счета", "description": "Интернет и телефон", "isDone": true}
+]
